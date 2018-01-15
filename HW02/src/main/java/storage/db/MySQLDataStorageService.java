@@ -3,6 +3,7 @@ package storage.db;
 import entities.Employee;
 import storage.IDataStorageService;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -10,139 +11,42 @@ import java.util.List;
 
 public class MySQLDataStorageService implements IDataStorageService {
 
+    private static final String DBSETTINGS_PROPERTY_FILE = "dbsettings.property";
+    private static final String INITIAL_DATA_DIR = "initial_data/";
 
-    MySQLConnectionFactory connectionFactory;
+    private ClassLoader classLoader;
+
+    private MySQLConnectionFactory connectionFactory;
+    private MySQLDatabaseCreator databaseCreator;
+    private MySQLDataImporter dataImporter;
+
     CatalogsDAO catalogsDAO;
     EmployeesDAO employeesDAO;
 
-    public MySQLDataStorageService(MySQLConnectionFactory connectionFactory) {
-        this.connectionFactory = connectionFactory;
+    public MySQLDataStorageService() {
+        classLoader = MySQLDataStorageService.class.getClassLoader();
+
+        this.connectionFactory = new MySQLConnectionFactory();
+        connectionFactory.loadConfigurationProperties(classLoader.getResource(DBSETTINGS_PROPERTY_FILE).getFile());
+
+        this.databaseCreator = new MySQLDatabaseCreator(connectionFactory);
+        this.dataImporter = new MySQLDataImporter(connectionFactory);
     }
-
-    private void createDataBase() {
-        try (Connection connection = connectionFactory.getSystemDBConnection()) {
-            Statement statement = connection.createStatement();
-
-            statement.execute(String.format(DBConsts.DROP_DATABASE_SQL, connectionFactory.getDatabaseName()));
-            statement.execute(String.format(DBConsts.CREATE_DATABASE_SQL, connectionFactory.getDatabaseName()));
-
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
-    }
-
-    private void createIDNameTable(Connection connection, String tableName) throws SQLException {
-        StringBuilder fields = new StringBuilder();
-        fields.append(DBConsts.newIDFieldDesc(DBConsts.F_ID)).append(",");
-        fields.append(DBConsts.newStringFieldDesc(DBConsts.F_NAME));
-        Statement statement = connection.createStatement();
-        statement.execute(String.format(DBConsts.CREATE_TABLE_SQL, tableName, fields.toString(), DBConsts.F_ID));
-    }
-
-    private void createDepartmentsTable(Connection connection) throws SQLException {
-        createIDNameTable(connection, DBConsts.TBL_DEPARTMENTS);
-    }
-
-    private void createLocationsTable(Connection connection) throws SQLException {
-        createIDNameTable(connection, DBConsts.TBL_LOCATIONS);
-    }
-
-    private void createPositionsTable(Connection connection) throws SQLException {
-        createIDNameTable(connection, DBConsts.TBL_POSITIONS);
-    }
-
-    private void createAccountsRolesTable(Connection connection) throws SQLException {
-        createIDNameTable(connection, DBConsts.TBL_ACCOUNTS_ROLES);
-    }
-
-    private void createAccountsTable(Connection connection) throws SQLException {
-        StringBuilder fields = new StringBuilder();
-
-        fields.append(DBConsts.newIDFieldDesc(DBConsts.F_ID)).append(",");
-        fields.append(DBConsts.newBigIntFieldDesc(DBConsts.F_ACCOUNTS_ROLE_ID)).append(",");
-        fields.append(DBConsts.newStringFieldDesc(DBConsts.F_NAME)).append(",");
-        fields.append(DBConsts.newForeignKey(DBConsts.F_ACCOUNTS_ROLE_ID, DBConsts.TBL_ACCOUNTS_ROLES, DBConsts.F_ID));
-
-        Statement statement = connection.createStatement();
-        statement.execute(String.format(DBConsts.CREATE_TABLE_SQL, DBConsts.TBL_ACCOUNTS, fields.toString(), DBConsts.F_ID));
-    }
-
-    private void createEmployeesTable(Connection connection) throws SQLException {
-        StringBuilder fields = new StringBuilder();
-
-        fields.append(DBConsts.newIDFieldDesc(DBConsts.F_ID)).append(",");
-        fields.append(DBConsts.newBigIntFieldDesc(DBConsts.F_LOCATION_ID)).append(",");
-        fields.append(DBConsts.newStringFieldDesc(DBConsts.F_FIRST_NAME)).append(",");
-        fields.append(DBConsts.newStringFieldDesc(DBConsts.F_MIDDLE_NAME)).append(",");
-        fields.append(DBConsts.newStringFieldDesc(DBConsts.F_SECOND_NAME)).append(",");
-        fields.append(DBConsts.newStringFieldDesc(DBConsts.F_PERSONAL_EMAIL)).append(",");
-        fields.append(DBConsts.newForeignKey(DBConsts.F_LOCATION_ID, DBConsts.TBL_LOCATIONS, DBConsts.F_ID));
-
-        Statement statement = connection.createStatement();
-        statement.execute(String.format(DBConsts.CREATE_TABLE_SQL, DBConsts.TBL_EMPLOYEES, fields.toString(), DBConsts.F_ID));
-    }
-
-    private void createEmployeesCorporateInfoTable(Connection connection) throws SQLException {
-        StringBuilder fields = new StringBuilder();
-
-        fields.append(DBConsts.newIDFieldDesc(DBConsts.F_ID)).append(",");
-        fields.append(DBConsts.newBigIntFieldDesc(DBConsts.F_EMPLOYEE_ID)).append(",");
-        fields.append(DBConsts.newBigIntFieldDesc(DBConsts.F_ACCOUNT_ID)).append(",");
-        fields.append(DBConsts.newBigIntFieldDesc(DBConsts.F_DEPARTMENT_ID)).append(",");
-        fields.append(DBConsts.newBigIntFieldDesc(DBConsts.F_POSITION_ID)).append(",");
-        fields.append(DBConsts.newStringFieldDesc(DBConsts.F_INTERNAL_PHONE_NUMBER)).append(",");
-        fields.append(DBConsts.newForeignKey(DBConsts.F_EMPLOYEE_ID, DBConsts.TBL_EMPLOYEES, DBConsts.F_ID)).append(",");
-        fields.append(DBConsts.newForeignKey(DBConsts.F_ACCOUNT_ID, DBConsts.TBL_ACCOUNTS, DBConsts.F_ID)).append(",");
-        fields.append(DBConsts.newForeignKey(DBConsts.F_DEPARTMENT_ID, DBConsts.TBL_DEPARTMENTS, DBConsts.F_ID)).append(",");
-        fields.append(DBConsts.newForeignKey(DBConsts.F_POSITION_ID, DBConsts.TBL_POSITIONS, DBConsts.F_ID));
-
-        Statement statement = connection.createStatement();
-        statement.execute(String.format(DBConsts.CREATE_TABLE_SQL, DBConsts.TBL_EMPLOYEES_CORPORATE_INFO, fields.toString(), DBConsts.F_ID));
-    }
-
-
-    private void createSalariesTable(Connection connection) throws SQLException {
-        StringBuilder fields = new StringBuilder();
-
-        fields.append(DBConsts.newIDFieldDesc(DBConsts.F_ID)).append(",");
-        fields.append(DBConsts.newBigIntFieldDesc(DBConsts.F_EMPLOYEE_ID)).append(",");
-        fields.append(DBConsts.newBigIntFieldDesc(DBConsts.F_SALARY)).append(",");
-        fields.append(DBConsts.newForeignKey(DBConsts.F_EMPLOYEE_ID, DBConsts.TBL_EMPLOYEES, DBConsts.F_ID));
-
-        Statement statement = connection.createStatement();
-        statement.execute(String.format(DBConsts.CREATE_TABLE_SQL, DBConsts.TBL_SALARIES, fields.toString(), DBConsts.F_ID));
-    }
-
-    private void createTables() {
-        try (Connection connection = connectionFactory.getDBConnection()) {
-            createDepartmentsTable(connection);
-            createLocationsTable(connection);
-            createPositionsTable(connection);
-            createAccountsRolesTable(connection);
-            createAccountsTable(connection);
-            createEmployeesTable(connection);
-            createEmployeesCorporateInfoTable(connection);
-            createSalariesTable(connection);
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
-    }
-
 
     @Override
     public void initStorage() {
-        createDataBase();
-        createTables();
+        databaseCreator.createDataBase();
+        databaseCreator.createTables();
     }
 
     @Override
-    public void saveEmployee() {
+    public void saveEmployee(Employee employee) {
 
     }
 
     @Override
-    public void importEmployees() {
-
+    public void importData() throws Exception {
+        dataImporter.importData(classLoader.getResource(INITIAL_DATA_DIR).getFile());
     }
 
     @Override

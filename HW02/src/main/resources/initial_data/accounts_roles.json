@@ -1,6 +1,6 @@
 [
-  {"id":"1", "role":"user"},
-  {"id":"2", "role":"hr"},
-  {"id":"3", "role":"booker"},
-  {"id":"4", "role":"director"}
+  {"id":"1", "name":"user"},
+  {"id":"2", "name":"hr"},
+  {"id":"3", "name":"booker"},
+  {"id":"4", "name":"director"}
 ]

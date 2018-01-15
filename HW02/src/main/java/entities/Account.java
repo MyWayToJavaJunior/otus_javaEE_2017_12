@@ -2,13 +2,15 @@ package entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Account {
     private long id;
-    private String Login;
-    private String Password;
+    private String login;
+    private String password;
     private AccountRole role;
 }
 
@@ -27,7 +29,7 @@ CatalogsDAO
 
 EmployeesDAO
 	saveEmployee
-	importEmployees
+	importData
 	getEmployee
 	getAllEmployees
 
@@ -40,7 +42,7 @@ DBService
     createDataBase
 
 	saveEmployee
-	importEmployees
+	importData
 
 	getEmployee
 	getAllEmployees

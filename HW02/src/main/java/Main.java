@@ -1,15 +1,32 @@
+import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
+import entities.Account;
+import entities.AccountRole;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import storage.IDataStorageService;
 import storage.db.MySQLConnectionFactory;
 import storage.db.MySQLDataStorageService;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
 
-    private static final String DBSETTINGS_PROPERTY_FILE = "dbsettings.property";
 
-    public static void main(String[] args) {
-        MySQLConnectionFactory factory = new MySQLConnectionFactory();
-        factory.loadConfigurationProperties(Main.class.getClassLoader().getResource(DBSETTINGS_PROPERTY_FILE).getFile());
+    public static void main(String[] args) throws Exception {
 
-        MySQLDataStorageService storageService = new MySQLDataStorageService(factory);
+
+        IDataStorageService storageService = new MySQLDataStorageService();
         storageService.initStorage();
+        storageService.importData();
+
     }
 }
