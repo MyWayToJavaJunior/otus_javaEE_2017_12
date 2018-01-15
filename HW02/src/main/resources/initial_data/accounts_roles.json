@@ -1,0 +1,6 @@
+[
+  {"id":"1", "role":"user"},
+  {"id":"2", "role":"hr"},
+  {"id":"3", "role":"booker"},
+  {"id":"4", "role":"director"}
+]

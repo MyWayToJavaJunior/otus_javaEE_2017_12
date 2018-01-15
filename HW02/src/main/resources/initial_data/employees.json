@@ -1,0 +1,12 @@
+[
+  {"id":"1", "location_id":"1", "first_name":"Франсуа", "middle_name":"Людвикович", "second_name":"Гугенот", "personal_email":"god@bk.ru"},
+
+  {"id":"2", "location_id":"1", "first_name":"Феодосия", "middle_name":"Игоревна", "second_name":"Резерфорд", "personal_email":"demigod@bk.ru"},
+
+  {"id":"3", "location_id":"2", "first_name":"Геннадий", "middle_name":"Акинфеевич", "second_name":"Пульт", "personal_email":"saint1@gmail.com"},
+  {"id":"4", "location_id":"2", "first_name":"Иван", "middle_name":"Сидоревич", "second_name":"Петров", "personal_email":"saint2@gmail.com"},
+
+  {"id":"5", "location_id":"3", "first_name":"Василий", "middle_name":"Илларионович", "second_name":"Каптча", "personal_email":"servant1@mail.ru"},
+  {"id":"6", "location_id":"3", "first_name":"Жинтынбек", "middle_name":"Курганович", "second_name":"Степь", "personal_email":"servant2@yandex.ru"},
+  {"id":"7", "location_id":"3", "first_name":"Всеволод", "middle_name":"Андреевич", "second_name":"Перебейнос", "personal_email":"servant3@rambler.ru"}
+]

@@ -1,0 +1,12 @@
+[
+  {"id":"1", "employee_id":"1", "salary":"1000000"},
+
+  {"id":"2", "employee_id":"2", "salary":"700000"},
+
+  {"id":"3", "employee_id":"3", "salary":"100000"},
+  {"id":"4", "employee_id":"4", "salary":"100000"},
+
+  {"id":"5", "employee_id":"5", "salary":"20000"},
+  {"id":"6", "employee_id":"6", "salary":"10000"},
+  {"id":"7", "employee_id":"7", "salary":"5000"}
+]

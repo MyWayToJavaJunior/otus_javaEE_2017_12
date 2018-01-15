@@ -1,0 +1,79 @@
+логин
+пароль
+ФИО,
+название подразделения
+город,
+подразделение
+должность,
+внутренний номер телефона,
+личный почтовый ящик
+заработной плате
+
+
+AccountsRoles {
+	ID
+	Name
+}
+
+Accounts {
+	ID
+	RoleID
+
+	Login
+	Password
+}
+
+Locations {
+	ID
+	Name
+}
+
+Employees {
+	ID
+	LocationID
+
+	FirstName
+	SecondName
+	MiddleName
+	PersonalEMail
+}
+
+Departments {
+	ID
+	Name
+}
+
+Positions {
+	ID
+	Name
+}
+
+EmployeesCorporateInfo {
+	ID
+	EmployeeID
+	AccountID
+
+	DepartmentID
+	PositionID
+	InternalPhoneNumber
+}
+
+Salaries {
+	ID
+	EmployeeID
+	Salary
+}
+	
+
+----------------------------------------------------------------------------------------
+
+Франсуа Людвикович Гугенот
+
+Феодосия Игоревна Резерфорд
+
+Геннадий Акинфеевич Пульт
+Иван Сидоревич Петров
+
+Василий Илларионович Каптча
+Жинтынбек Курганович Степь
+Всеволод Андреевич Перебейнос
