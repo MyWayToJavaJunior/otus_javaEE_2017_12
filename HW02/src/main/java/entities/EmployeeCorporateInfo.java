@@ -7,8 +7,8 @@ import lombok.Data;
 @AllArgsConstructor
 public class EmployeeCorporateInfo {
     private long id;
-    private long accountId;
     private Employee employee;
+    private Account account;
     private Department department;
     private Position position;
     private String internalPhoneNumber;

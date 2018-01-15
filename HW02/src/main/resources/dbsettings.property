@@ -1,0 +1,5 @@
+host=localhost
+port=3306
+database=JavaEEHomework02
+username=anyuser
+password=anyuser3310

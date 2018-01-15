@@ -5,11 +5,11 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class Accounts {
+public class Account {
     private long id;
     private String Login;
     private String Password;
-    private AccountsRole role;
+    private AccountRole role;
 }
 
 
@@ -25,14 +25,14 @@ CatalogsDAO
 	saveLocation
 	saveSalary
 
-EmployeeDAO
+EmployeesDAO
 	saveEmployee
 	importEmployees
 	getEmployee
 	getAllEmployees
 
 DBService
-	ConnectionFactory connectionFactory;
+	MySQLConnectionFactory connectionFactory;
 
 	CatalogsDAO catalogsDAO
     EmployeeDAO employeeDAO
