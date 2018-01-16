@@ -1,12 +1,8 @@
 package storage.db;
 
-import entities.Employee;
+import entities.EmployeePersonalInfo;
 import storage.IDataStorageService;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
 public class MySQLDataStorageService implements IDataStorageService {
@@ -40,7 +36,7 @@ public class MySQLDataStorageService implements IDataStorageService {
     }
 
     @Override
-    public void saveEmployee(Employee employee) {
+    public void saveEmployee(EmployeePersonalInfo employee) {
 
     }
 
@@ -50,12 +46,12 @@ public class MySQLDataStorageService implements IDataStorageService {
     }
 
     @Override
-    public Employee getEmployee(long id) {
+    public EmployeePersonalInfo getEmployee(long id) {
         return null;
     }
 
     @Override
-    public List<Employee> getAllEmployees() {
+    public List<EmployeePersonalInfo> getAllEmployees() {
         return null;
     }
 }

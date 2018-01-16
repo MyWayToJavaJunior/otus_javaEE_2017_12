@@ -2,14 +2,20 @@ package entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Employee {
     private long id;
-    private Location location;
-    private String firstName;
-    private String secondName;
-    private String middleName;
-    private String personalEMail;
+    private EmployeePersonalInfo personalInfo;
+    private Account account;
+    private Department department;
+    private Position position;
+    private String internalPhoneNumber;
+
+    public Employee(long id) {
+        this.id = id;
+    }
 }

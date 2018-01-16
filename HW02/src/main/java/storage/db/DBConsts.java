@@ -22,8 +22,8 @@ class DBConsts {
     static final String TBL_DEPARTMENTS = "Departments";
     static final String TBL_LOCATIONS = "Locations";
     static final String TBL_POSITIONS = "Positions";
+    static final String TBL_EMPLOYEES_PERSONAL_INFO = "EmployeesPersonalInfo";
     static final String TBL_EMPLOYEES = "Employees";
-    static final String TBL_EMPLOYEES_CORPORATE_INFO = "EmployeesCorporateInfo";
     static final String TBL_SALARIES = "Salaries";
 
     static final String F_ID = "ID";
@@ -39,6 +39,7 @@ class DBConsts {
     static final String F_SECOND_NAME = "SecondName";
     static final String F_PERSONAL_EMAIL = "PersonalEmail";
 
+    static final String F_PERSONAL_INFO_ID = "PersonalInfoID";
     static final String F_EMPLOYEE_ID = "EmployeeID";
     static final String F_ACCOUNT_ID = "AccountID";
     static final String F_DEPARTMENT_ID = "DepartmentID";

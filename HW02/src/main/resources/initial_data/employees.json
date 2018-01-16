@@ -1,12 +1,12 @@
 [
-  {"id":"1", "location_id":"1", "first_name":"Франсуа", "middle_name":"Людвикович", "second_name":"Гугенот", "personal_email":"god@bk.ru"},
+  {"id":"1", "account_id":"1", "personal_info_id":"1", "position_id":"6", "department_id":"1", "internal_phone_number":"001"},
 
-  {"id":"2", "location_id":"1", "first_name":"Феодосия", "middle_name":"Игоревна", "second_name":"Резерфорд", "personal_email":"demigod@bk.ru"},
+  {"id":"2", "account_id":"2", "personal_info_id":"2", "position_id":"5", "department_id":"1", "internal_phone_number":"002"},
 
-  {"id":"3", "location_id":"2", "first_name":"Геннадий", "middle_name":"Акинфеевич", "second_name":"Пульт", "personal_email":"saint1@gmail.com"},
-  {"id":"4", "location_id":"2", "first_name":"Иван", "middle_name":"Сидоревич", "second_name":"Петров", "personal_email":"saint2@gmail.com"},
+  {"id":"3", "account_id":"3", "personal_info_id":"3", "position_id":"4", "department_id":"2", "internal_phone_number":"003"},
+  {"id":"4", "account_id":"4", "personal_info_id":"4", "position_id":"4", "department_id":"2", "internal_phone_number":"004"},
 
-  {"id":"5", "location_id":"3", "first_name":"Василий", "middle_name":"Илларионович", "second_name":"Каптча", "personal_email":"servant1@mail.ru"},
-  {"id":"6", "location_id":"3", "first_name":"Жинтынбек", "middle_name":"Курганович", "second_name":"Степь", "personal_email":"servant2@yandex.ru"},
-  {"id":"7", "location_id":"3", "first_name":"Всеволод", "middle_name":"Андреевич", "second_name":"Перебейнос", "personal_email":"servant3@rambler.ru"}
+  {"id":"5", "account_id":"5", "personal_info_id":"5", "position_id":"3", "department_id":"2", "internal_phone_number":"005"},
+  {"id":"6", "account_id":"6", "personal_info_id":"6", "position_id":"2", "department_id":"2", "internal_phone_number":"006"},
+  {"id":"7", "account_id":"7", "personal_info_id":"7", "position_id":"1", "department_id":"2", "internal_phone_number":"007"}
 ]

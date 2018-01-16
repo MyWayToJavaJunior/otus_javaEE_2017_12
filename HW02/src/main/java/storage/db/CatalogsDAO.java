@@ -21,6 +21,7 @@ class CatalogsDAO {
     private PreparedStatement positionInsertStatement;
     private PreparedStatement positionInsertOrUpdateStatement;
 
+
     CatalogsDAO(Connection connection) {
         this.connection = connection;
         prepareStatments();
@@ -71,7 +72,7 @@ class CatalogsDAO {
             System.err.println(e.getMessage());
         }
     }
-
+/*
     long executeAndGetID(PreparedStatement statement, boolean isInsertStatment, long curID) throws SQLException {
         statement.executeUpdate();
         long newId = curID;
@@ -84,7 +85,7 @@ class CatalogsDAO {
         }
         return newId;
     }
-
+*/
     long saveIDNameRec(PreparedStatement insertStatment, PreparedStatement insertOrUpdateStatment, long id, String name) throws SQLException {
         PreparedStatement statement;
         if (id <= 0) {
@@ -96,7 +97,7 @@ class CatalogsDAO {
             statement.setString(2, name);
             statement.setString(3, name);
         }
-        return executeAndGetID(statement, id <= 0, id);
+        return PreparedStatmentHelper.executeAndGetID(statement, id > 0, id);
     }
 
     void save(AccountRole role) throws SQLException {
@@ -133,7 +134,6 @@ class CatalogsDAO {
             statement.setString(parIndex++, account.getLogin());
             statement.setString(parIndex, account.getPassword());
         }
-        account.setId(executeAndGetID(statement, isInsert, account.getId()));
+        account.setId(PreparedStatmentHelper.executeAndGetID(statement, !isInsert, account.getId()));
     }
-
 }

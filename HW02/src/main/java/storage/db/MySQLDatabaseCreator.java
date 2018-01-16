@@ -60,7 +60,7 @@ public class MySQLDatabaseCreator {
         statement.execute(String.format(DBConsts.CREATE_TABLE_SQL, DBConsts.TBL_ACCOUNTS, fields.toString(), DBConsts.F_ID));
     }
 
-    private void createEmployeesTable(Connection connection) throws SQLException {
+    private void createEmployeesPersonalInfoTable(Connection connection) throws SQLException {
         StringBuilder fields = new StringBuilder();
 
         fields.append(DBConsts.newIDFieldDesc(DBConsts.F_ID)).append(",");
@@ -72,25 +72,25 @@ public class MySQLDatabaseCreator {
         fields.append(DBConsts.newForeignKey(DBConsts.F_LOCATION_ID, DBConsts.TBL_LOCATIONS, DBConsts.F_ID));
 
         Statement statement = connection.createStatement();
-        statement.execute(String.format(DBConsts.CREATE_TABLE_SQL, DBConsts.TBL_EMPLOYEES, fields.toString(), DBConsts.F_ID));
+        statement.execute(String.format(DBConsts.CREATE_TABLE_SQL, DBConsts.TBL_EMPLOYEES_PERSONAL_INFO, fields.toString(), DBConsts.F_ID));
     }
 
-    private void createEmployeesCorporateInfoTable(Connection connection) throws SQLException {
+    private void createEmployeesTable(Connection connection) throws SQLException {
         StringBuilder fields = new StringBuilder();
 
         fields.append(DBConsts.newIDFieldDesc(DBConsts.F_ID)).append(",");
-        fields.append(DBConsts.newBigIntFieldDesc(DBConsts.F_EMPLOYEE_ID)).append(",");
+        fields.append(DBConsts.newBigIntFieldDesc(DBConsts.F_PERSONAL_INFO_ID)).append(",");
         fields.append(DBConsts.newBigIntFieldDesc(DBConsts.F_ACCOUNT_ID)).append(",");
         fields.append(DBConsts.newBigIntFieldDesc(DBConsts.F_DEPARTMENT_ID)).append(",");
         fields.append(DBConsts.newBigIntFieldDesc(DBConsts.F_POSITION_ID)).append(",");
         fields.append(DBConsts.newStringFieldDesc(DBConsts.F_INTERNAL_PHONE_NUMBER)).append(",");
-        fields.append(DBConsts.newForeignKey(DBConsts.F_EMPLOYEE_ID, DBConsts.TBL_EMPLOYEES, DBConsts.F_ID)).append(",");
+        fields.append(DBConsts.newForeignKey(DBConsts.F_PERSONAL_INFO_ID, DBConsts.TBL_EMPLOYEES_PERSONAL_INFO, DBConsts.F_ID)).append(",");
         fields.append(DBConsts.newForeignKey(DBConsts.F_ACCOUNT_ID, DBConsts.TBL_ACCOUNTS, DBConsts.F_ID)).append(",");
         fields.append(DBConsts.newForeignKey(DBConsts.F_DEPARTMENT_ID, DBConsts.TBL_DEPARTMENTS, DBConsts.F_ID)).append(",");
         fields.append(DBConsts.newForeignKey(DBConsts.F_POSITION_ID, DBConsts.TBL_POSITIONS, DBConsts.F_ID));
 
         Statement statement = connection.createStatement();
-        statement.execute(String.format(DBConsts.CREATE_TABLE_SQL, DBConsts.TBL_EMPLOYEES_CORPORATE_INFO, fields.toString(), DBConsts.F_ID));
+        statement.execute(String.format(DBConsts.CREATE_TABLE_SQL, DBConsts.TBL_EMPLOYEES, fields.toString(), DBConsts.F_ID));
     }
 
 
@@ -113,8 +113,8 @@ public class MySQLDatabaseCreator {
             createPositionsTable(connection);
             createAccountsRolesTable(connection);
             createAccountsTable(connection);
+            createEmployeesPersonalInfoTable(connection);
             createEmployeesTable(connection);
-            createEmployeesCorporateInfoTable(connection);
             createSalariesTable(connection);
         } catch (SQLException e) {
             System.err.println(e.getMessage());

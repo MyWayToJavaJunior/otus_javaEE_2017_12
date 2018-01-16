@@ -8,4 +8,8 @@ import lombok.Data;
 public class Department {
     private long id;
     private String name;
+
+    public Department(long id) {
+        this.id = id;
+    }
 }
