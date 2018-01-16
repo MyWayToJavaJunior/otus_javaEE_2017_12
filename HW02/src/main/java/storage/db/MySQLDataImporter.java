@@ -123,7 +123,7 @@ public class MySQLDataImporter {
             JSONObject jo = (JSONObject)o;
             Salary salary = new Salary();
             salary.setId(Long.valueOf((String)jo.get("id")));
-            salary.setEmployee(new EmployeePersonalInfo(Long.valueOf((String)jo.get("employee_id"))));
+            salary.setEmployee(new Employee(Long.valueOf((String)jo.get("employee_id"))));
             salary.setSalary(Long.valueOf((String)jo.get("salary")));
             employeesDAO.save(salary);
         }

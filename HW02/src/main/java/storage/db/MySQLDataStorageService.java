@@ -1,8 +1,10 @@
 package storage.db;
 
+import entities.Employee;
 import entities.EmployeePersonalInfo;
 import storage.IDataStorageService;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class MySQLDataStorageService implements IDataStorageService {
@@ -16,9 +18,6 @@ public class MySQLDataStorageService implements IDataStorageService {
     private MySQLDatabaseCreator databaseCreator;
     private MySQLDataImporter dataImporter;
 
-    CatalogsDAO catalogsDAO;
-    EmployeesDAO employeesDAO;
-
     public MySQLDataStorageService() {
         classLoader = MySQLDataStorageService.class.getClassLoader();
 
@@ -27,17 +26,20 @@ public class MySQLDataStorageService implements IDataStorageService {
 
         this.databaseCreator = new MySQLDatabaseCreator(connectionFactory);
         this.dataImporter = new MySQLDataImporter(connectionFactory);
+
+
     }
 
     @Override
     public void initStorage() {
         databaseCreator.createDataBase();
-        databaseCreator.createTables();
+        databaseCreator.createTablesAndViews();
     }
 
     @Override
-    public void saveEmployee(EmployeePersonalInfo employee) {
-
+    public void saveEmployee(Employee employee) throws SQLException {
+        EmployeesDAO employeesDAO = new EmployeesDAO(connectionFactory.getDBConnection());
+        employeesDAO.save(employee);
     }
 
     @Override
@@ -46,12 +48,13 @@ public class MySQLDataStorageService implements IDataStorageService {
     }
 
     @Override
-    public EmployeePersonalInfo getEmployee(long id) {
+    public Employee getEmployee(long id) {
         return null;
     }
 
     @Override
-    public List<EmployeePersonalInfo> getAllEmployees() {
-        return null;
+    public List<Employee> getAllEmployees() throws SQLException {
+        EmployeesDAO employeesDAO = new EmployeesDAO(connectionFactory.getDBConnection());
+        return employeesDAO.getAll();
     }
 }

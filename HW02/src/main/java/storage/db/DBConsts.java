@@ -11,14 +11,13 @@ class DBConsts {
     static final String DROP_DATABASE_SQL = "DROP DATABASE IF EXISTS %s";
     static final String CREATE_DATABASE_SQL = "CREATE DATABASE IF NOT EXISTS %s";
     static final String CREATE_TABLE_SQL = "CREATE TABLE IF NOT EXISTS %s(%s, primary key (%s))";
+    static final String CREATE_VIEW_SQL = "CREATE OR REPLACE VIEW %s AS %s";
 
     static final String INSERT_INTO_SQL = "INSERT INTO %s (%s) VALUES (%s)";
-    static final String INSERT_OR_UPDATESQL = INSERT_INTO_SQL + " ON DUPLICATE KEY UPDATE %s";
-
-
+    static final String INSERT_OR_UPDATE_SQL = INSERT_INTO_SQL + " ON DUPLICATE KEY UPDATE %s";
 
     static final String TBL_ACCOUNTS_ROLES = "AccountsRoles";
-    static final String TBL_ACCOUNTS = "Account";
+    static final String TBL_ACCOUNTS = "Accounts";
     static final String TBL_DEPARTMENTS = "Departments";
     static final String TBL_LOCATIONS = "Locations";
     static final String TBL_POSITIONS = "Positions";
@@ -47,6 +46,16 @@ class DBConsts {
     static final String F_INTERNAL_PHONE_NUMBER = "InternalPhoneNumber";
 
     static final String F_SALARY = "Salary";
+
+    static final String VIEW_ACCOUNTS = "V_Accounts";
+    static final String VIEW_EMPLOYEES_PERSONAL_INFO = "V_EmployeesPersonalInfo";
+    static final String VIEW_EMPLOYEES = "V_Employees";
+
+    static final String F_ROLE_NAME = "RoleName";
+    static final String F_LOCATION_NAME = "LocationName";
+    static final String F_DEPARTMENT_NAME = "DepartmentName";
+    static final String F_POSITION_NAME = "PositionName";
+    static final String F_SALARY_ID = "SalaryID";
 
 
     static String newFieldDesc(String fieldName, String fieldType) {

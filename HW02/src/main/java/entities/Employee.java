@@ -15,6 +15,8 @@ public class Employee {
     private Position position;
     private String internalPhoneNumber;
 
+    private Salary salary;
+
     public Employee(long id) {
         this.id = id;
     }

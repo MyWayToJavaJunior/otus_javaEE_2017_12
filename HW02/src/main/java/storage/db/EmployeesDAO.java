@@ -1,12 +1,15 @@
 package storage.db;
 
-import entities.Employee;
-import entities.EmployeePersonalInfo;
-import entities.Salary;
+import entities.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import static storage.db.DBConsts.*;
 
 public class EmployeesDAO {
 
@@ -21,6 +24,9 @@ public class EmployeesDAO {
     private PreparedStatement salaryInsertStatement;
     private PreparedStatement salaryInsertOrUpdateStatement;
 
+    private PreparedStatement employeeSelectByIDStatement;
+    private PreparedStatement employeeSelectAllStatement;
+
     public EmployeesDAO(Connection connection) {
         this.connection = connection;
         prepareStatments();
@@ -28,48 +34,56 @@ public class EmployeesDAO {
 
 
     private PreparedStatement prepareEmployeePersonalInfoInsertOrUpdateStatments() throws SQLException {
-        String sql = String.format(DBConsts.INSERT_OR_UPDATESQL,
-                DBConsts.TBL_EMPLOYEES_PERSONAL_INFO,
-                DBConsts.F_ID + "," + DBConsts.F_LOCATION_ID + "," + DBConsts.F_FIRST_NAME + "," + DBConsts.F_MIDDLE_NAME + "," + DBConsts.F_SECOND_NAME + "," + DBConsts.F_PERSONAL_EMAIL,
+        String sql = String.format(INSERT_OR_UPDATE_SQL,
+                TBL_EMPLOYEES_PERSONAL_INFO,
+                F_ID + "," + F_LOCATION_ID + "," + F_FIRST_NAME + "," + F_MIDDLE_NAME + "," + F_SECOND_NAME + "," + F_PERSONAL_EMAIL,
                 "?, ?, ?, ?, ?, ?",
-                DBConsts.F_LOCATION_ID + " = ?, " + DBConsts.F_FIRST_NAME + " = ?, " + DBConsts.F_MIDDLE_NAME + " = ?," + DBConsts.F_SECOND_NAME + " = ?," + DBConsts.F_PERSONAL_EMAIL + " = ?");
+                F_LOCATION_ID + " = ?, " + F_FIRST_NAME + " = ?, " + F_MIDDLE_NAME + " = ?," + F_SECOND_NAME + " = ?," + F_PERSONAL_EMAIL + " = ?");
         return connection.prepareStatement(sql);
     }
 
     private PreparedStatement prepareEmployeePersonalInfoInsertStatments() throws SQLException {
-        String sql = String.format(DBConsts.INSERT_INTO_SQL,
-                DBConsts.TBL_EMPLOYEES_PERSONAL_INFO,
-                DBConsts.F_ID + "," + DBConsts.F_LOCATION_ID + "," + DBConsts.F_FIRST_NAME + "," + DBConsts.F_MIDDLE_NAME + "," + DBConsts.F_SECOND_NAME + "," + DBConsts.F_PERSONAL_EMAIL,
+        String sql = String.format(INSERT_INTO_SQL,
+                TBL_EMPLOYEES_PERSONAL_INFO,
+                F_ID + "," + F_LOCATION_ID + "," + F_FIRST_NAME + "," + F_MIDDLE_NAME + "," + F_SECOND_NAME + "," + F_PERSONAL_EMAIL,
                 "?, ?, ?, ?, ?, ?");
         return connection.prepareStatement(sql);
     }
 
     private PreparedStatement prepareEmployeeInsertOrUpdateStatments() throws SQLException {
-        String sql = String.format(DBConsts.INSERT_OR_UPDATESQL,
-                DBConsts.TBL_EMPLOYEES,
-                DBConsts.F_ID + "," + DBConsts.F_PERSONAL_INFO_ID + "," + DBConsts.F_ACCOUNT_ID + "," + DBConsts.F_DEPARTMENT_ID + "," + DBConsts.F_POSITION_ID + "," + DBConsts.F_INTERNAL_PHONE_NUMBER,
+        String sql = String.format(INSERT_OR_UPDATE_SQL,
+                TBL_EMPLOYEES,
+                F_ID + "," + F_PERSONAL_INFO_ID + "," + F_ACCOUNT_ID + "," + F_DEPARTMENT_ID + "," + F_POSITION_ID + "," + F_INTERNAL_PHONE_NUMBER,
                 "?, ?, ?, ?, ?, ?",
-                DBConsts.F_PERSONAL_INFO_ID + " = ?, " + DBConsts.F_ACCOUNT_ID + " = ?, " + DBConsts.F_DEPARTMENT_ID + " = ?," + DBConsts.F_POSITION_ID + " = ?," + DBConsts.F_INTERNAL_PHONE_NUMBER + " = ?");
+                F_PERSONAL_INFO_ID + " = ?, " + F_ACCOUNT_ID + " = ?, " + F_DEPARTMENT_ID + " = ?," + F_POSITION_ID + " = ?," + F_INTERNAL_PHONE_NUMBER + " = ?");
         return connection.prepareStatement(sql);
     }
 
     private PreparedStatement prepareEmployeeInsertStatments() throws SQLException {
-        String sql = String.format(DBConsts.INSERT_INTO_SQL,
-                DBConsts.TBL_EMPLOYEES,
-                DBConsts.F_ID + "," + DBConsts.F_PERSONAL_INFO_ID + "," + DBConsts.F_ACCOUNT_ID + "," + DBConsts.F_DEPARTMENT_ID + "," + DBConsts.F_POSITION_ID + "," + DBConsts.F_INTERNAL_PHONE_NUMBER,
+        String sql = String.format(INSERT_INTO_SQL,
+                TBL_EMPLOYEES,
+                F_ID + "," + F_PERSONAL_INFO_ID + "," + F_ACCOUNT_ID + "," + F_DEPARTMENT_ID + "," + F_POSITION_ID + "," + F_INTERNAL_PHONE_NUMBER,
                 "?, ?, ?, ?, ?, ?");
         return connection.prepareStatement(sql);
     }
 
     private PreparedStatement prepareSalaryInsertOrUpdateStatments() throws SQLException {
-        String sql = String.format(DBConsts.INSERT_OR_UPDATESQL, DBConsts.TBL_SALARIES, DBConsts.F_ID + "," + DBConsts.F_EMPLOYEE_ID + "," + DBConsts.F_SALARY, "?, ?, ?",
-                DBConsts.F_EMPLOYEE_ID + " = ?, " + DBConsts.F_SALARY + " = ?");
+        String sql = String.format(INSERT_OR_UPDATE_SQL, TBL_SALARIES, F_ID + "," + F_EMPLOYEE_ID + "," + F_SALARY, "?, ?, ?",
+                F_EMPLOYEE_ID + " = ?, " + F_SALARY + " = ?");
         return connection.prepareStatement(sql);
     }
 
     private PreparedStatement prepareSalaryInsertStatments() throws SQLException {
-        String sql = String.format(DBConsts.INSERT_INTO_SQL, DBConsts.TBL_SALARIES, DBConsts.F_ID + "," + DBConsts.F_EMPLOYEE_ID + "," + DBConsts.F_SALARY, "?, ?, ?");
+        String sql = String.format(INSERT_INTO_SQL, TBL_SALARIES, F_ID + "," + F_EMPLOYEE_ID + "," + F_SALARY, "?, ?, ?");
         return connection.prepareStatement(sql);
+    }
+
+    private PreparedStatement prepareEmployeeSelectByIDStatement() throws SQLException {
+        return connection.prepareStatement("SELECT * FROM " + VIEW_EMPLOYEES + " WHERE " + F_ID + " = ?");
+    }
+
+    private PreparedStatement prepareEmployeeSelectAllStatement() throws SQLException {
+        return connection.prepareStatement("SELECT * FROM " + VIEW_EMPLOYEES + " ORDER BY " + F_FIRST_NAME);
     }
 
     private void prepareStatments() {
@@ -82,6 +96,10 @@ public class EmployeesDAO {
 
             salaryInsertStatement = prepareSalaryInsertStatments();
             salaryInsertOrUpdateStatement = prepareSalaryInsertOrUpdateStatments();
+
+            employeeSelectAllStatement = prepareEmployeeSelectAllStatement();
+            employeeSelectByIDStatement = prepareEmployeeSelectByIDStatement();
+
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
@@ -143,6 +161,62 @@ public class EmployeesDAO {
             statement.setLong(parIndex++, salary.getSalary());
         }
         salary.setId(PreparedStatmentHelper.executeAndGetID(statement, !isInsert, salary.getId()));
+    }
+
+    private Employee parseEmployeeResultSet(ResultSet rs) throws SQLException {
+        Employee employee = new Employee();
+
+        Location location = new Location(rs.getLong(F_LOCATION_ID), rs.getNString(F_LOCATION_NAME));
+
+        EmployeePersonalInfo personalInfo = new EmployeePersonalInfo();
+        personalInfo.setId(rs.getLong(F_PERSONAL_INFO_ID));
+        personalInfo.setLocation(location);
+        personalInfo.setFirstName(rs.getString(F_FIRST_NAME));
+        personalInfo.setMiddleName(rs.getString(F_MIDDLE_NAME));
+        personalInfo.setSecondName(rs.getString(F_SECOND_NAME));
+        personalInfo.setPersonalEMail(rs.getString(F_PERSONAL_EMAIL));
+
+        AccountRole accountRole = new AccountRole(rs.getLong(F_ACCOUNTS_ROLE_ID), rs.getString(F_ROLE_NAME));
+        Account account = new Account(rs.getLong(F_ACCOUNT_ID), rs.getString(F_LOGIN), rs.getString(F_PASSWORD), accountRole);
+
+        Department department = new Department(rs.getLong(F_DEPARTMENT_ID), rs.getString(F_DEPARTMENT_NAME));
+        Position position = new Position(rs.getLong(F_POSITION_ID), rs.getString(F_POSITION_NAME));
+        Salary salary = new Salary(rs.getLong(F_SALARY_ID), employee, rs.getLong(F_SALARY));
+
+
+        employee.setId(rs.getLong(F_ID));
+        employee.setPersonalInfo(personalInfo);
+        employee.setAccount(account);
+        employee.setDepartment(department);
+        employee.setPosition(position);
+        employee.setInternalPhoneNumber(rs.getNString(F_INTERNAL_PHONE_NUMBER));
+        employee.setSalary(salary);
+
+
+        return employee;
+    }
+
+    List<Employee> getAll() throws SQLException {
+        ArrayList<Employee> employees = new ArrayList<>();
+
+        employeeSelectAllStatement.execute();
+        ResultSet rs = employeeSelectAllStatement.getResultSet();
+        while (rs.next()) {
+            employees.add(parseEmployeeResultSet(rs));
+        }
+
+        return employees;
+    }
+
+    Employee getOne(long id) throws SQLException {
+        employeeSelectByIDStatement.setLong(1, id);
+        employeeSelectByIDStatement.execute();
+        ResultSet rs = employeeSelectAllStatement.getResultSet();
+        if (rs.next()) {
+            return parseEmployeeResultSet(rs);
+        }
+        return null;
+
     }
 
 

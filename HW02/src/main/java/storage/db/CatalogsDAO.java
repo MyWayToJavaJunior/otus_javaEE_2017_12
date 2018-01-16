@@ -28,7 +28,7 @@ class CatalogsDAO {
     }
 
     private PreparedStatement prepareIDNameInsertOrUpdateStatments(String tableName) throws SQLException {
-        String sql = String.format(DBConsts.INSERT_OR_UPDATESQL, tableName, DBConsts.F_ID + "," + DBConsts.F_NAME, "?, ?", DBConsts.F_NAME + " = ?");
+        String sql = String.format(DBConsts.INSERT_OR_UPDATE_SQL, tableName, DBConsts.F_ID + "," + DBConsts.F_NAME, "?, ?", DBConsts.F_NAME + " = ?");
         return connection.prepareStatement(sql);
     }
 
@@ -38,7 +38,7 @@ class CatalogsDAO {
     }
 
     private PreparedStatement prepareAccountInsertOrUpdateStatments() throws SQLException {
-        String sql = String.format(DBConsts.INSERT_OR_UPDATESQL,
+        String sql = String.format(DBConsts.INSERT_OR_UPDATE_SQL,
                 DBConsts.TBL_ACCOUNTS,
                 DBConsts.F_ID + "," + DBConsts.F_ACCOUNTS_ROLE_ID + "," + DBConsts.F_LOGIN + "," + DBConsts.F_PASSWORD,
                 "?, ?, ?, ?",

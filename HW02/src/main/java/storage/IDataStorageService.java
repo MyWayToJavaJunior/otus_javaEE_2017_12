@@ -1,17 +1,18 @@
 package storage;
 
-import entities.EmployeePersonalInfo;
+import entities.Employee;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface IDataStorageService {
     void initStorage();
 
-    void saveEmployee(EmployeePersonalInfo employee);
+    void saveEmployee(Employee employee) throws SQLException;
 
     void importData() throws Exception;
 
-    EmployeePersonalInfo getEmployee(long id);
-    List<EmployeePersonalInfo> getAllEmployees();
+    Employee getEmployee(long id);
+    List<Employee> getAllEmployees() throws SQLException;
 
 }
