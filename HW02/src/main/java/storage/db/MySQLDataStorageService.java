@@ -2,7 +2,9 @@ package storage.db;
 
 import entities.Employee;
 import entities.EmployeePersonalInfo;
-import storage.IDataStorageService;
+import entities.Salary;
+import storage.interfaces.IDataStorageService;
+import storage.interfaces.IEmployeesDAO;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -26,20 +28,30 @@ public class MySQLDataStorageService implements IDataStorageService {
 
         this.databaseCreator = new MySQLDatabaseCreator(connectionFactory);
         this.dataImporter = new MySQLDataImporter(connectionFactory);
-
-
     }
 
     @Override
     public void initStorage() {
         databaseCreator.createDataBase();
-        databaseCreator.createTablesAndViews();
+        databaseCreator.createDatabaseStructure();
+    }
+
+    @Override
+    public void saveEmployeePersonalInfo(EmployeePersonalInfo personalInfo) throws SQLException {
+        IEmployeesDAO IEmployeesDAO = new EmployeesDAO(connectionFactory.getDBConnection());
+        IEmployeesDAO.save(personalInfo);
+    }
+
+    @Override
+    public void saveEmployeeSalary(Salary salary) throws SQLException {
+        IEmployeesDAO IEmployeesDAO = new EmployeesDAO(connectionFactory.getDBConnection());
+        IEmployeesDAO.save(salary);
     }
 
     @Override
     public void saveEmployee(Employee employee) throws SQLException {
-        EmployeesDAO employeesDAO = new EmployeesDAO(connectionFactory.getDBConnection());
-        employeesDAO.save(employee);
+        IEmployeesDAO IEmployeesDAO = new EmployeesDAO(connectionFactory.getDBConnection());
+        IEmployeesDAO.save(employee);
     }
 
     @Override
@@ -48,13 +60,26 @@ public class MySQLDataStorageService implements IDataStorageService {
     }
 
     @Override
-    public Employee getEmployee(long id) {
-        return null;
+    public Employee getOneEmployee(long id) throws SQLException {
+        IEmployeesDAO IEmployeesDAO = new EmployeesDAO(connectionFactory.getDBConnection());
+        return IEmployeesDAO.getOneEmployee(id);
     }
 
     @Override
     public List<Employee> getAllEmployees() throws SQLException {
-        EmployeesDAO employeesDAO = new EmployeesDAO(connectionFactory.getDBConnection());
-        return employeesDAO.getAll();
+        IEmployeesDAO IEmployeesDAO = new EmployeesDAO(connectionFactory.getDBConnection());
+        return IEmployeesDAO.getAllEmployees();
+    }
+
+    @Override
+    public List<Employee> getAllEmployeesWithMaxSalary() throws SQLException {
+        IEmployeesDAO IEmployeesDAO = new EmployeesDAO(connectionFactory.getDBConnection());
+        return IEmployeesDAO.getAllEmployeesWithMaxSalary();
+    }
+
+    @Override
+    public void deleteOneEmployee(long id) throws SQLException {
+        IEmployeesDAO IEmployeesDAO = new EmployeesDAO(connectionFactory.getDBConnection());
+        IEmployeesDAO.deleteOneEmployee(id);
     }
 }

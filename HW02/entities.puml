@@ -1,0 +1,137 @@
+@startuml
+
+class Account {
+    long id
+    String login
+    String password
+    AccountRole role
+--
+    long getId()
+    String getLogin()
+    String getPassword()
+    AccountRole getRole()
+--
+    void setId(long id)
+    void setLogin(String login)
+    void setPassword(String password)
+    void setRole(AccountRole role)
+}
+
+class AccountRole {
+    long id
+    String name
+--
+    long getId()
+    String getName()
+--
+    void setId(long id)
+    void stName(String name)
+}
+
+class Department {
+    long id
+    String name
+--
+    long getId()
+    String getName()
+--
+    void setId(long id)
+    void setName(String name)
+}
+
+class Location {
+    long id
+    String name
+--
+    long getId()
+    String getName()
+--
+    void setId(long id)
+    void setName(String name)
+}
+
+class Position {
+    long id
+    String name
+--
+    long getId()
+    String getName()
+--
+    void setId(long id)
+    void setName(String name)
+}
+
+class EmployeePersonalInfo {
+    long id
+    Location location
+    String firstName
+    String secondName
+    String middleName
+    String personalEMail
+--
+    long getId()
+    Location getLocation()
+    String getFirstName()
+    String getSecondName()
+    String getMiddleName()
+    String getPersonalEMail()
+--
+    void setId(long id)
+    void setLocation(Location location)
+    void setFirstName(String firstName)
+    void setSecondName(String secondName)
+    void setMiddleName(String middleName)
+    void setPersonalEMail(String personalEMail)
+}
+
+class Employee {
+    long id
+    EmployeePersonalInfo personalInfo
+    Account account
+    Department department
+    Position position
+    String internalPhoneNumber
+    Salary salary
+--
+    long getId();
+    EmployeePersonalInfo getPersonalInfo()
+    Account getAccount()
+    Department getDepartment()
+    Position getPosition()
+    String getInternalPhoneNumber()
+    Salary getSalary()
+--
+    void setId(long id)
+    void setPersonalInfo(EmployeePersonalInfo personalInfo)
+    void setAccount(Account account)
+    void setDepartment(Department department)
+    void setPosition(Position position)
+    void setInternalPhoneNumber(String internalPhoneNumber)
+    void setSalary(Salary salary)
+}
+
+class Salary {
+    long id;
+    Employee employee
+    long salary
+--
+    long getId()
+    Employee getEmployee()
+    long getSalary()
+--
+    void setId(long id)
+    void setEmployee(Employee employee)
+    void setSalary(long salary)
+
+}
+
+AccountRole <-- Account
+EmployeePersonalInfo <-- Location
+Employee <-- EmployeePersonalInfo
+Employee <-- Account
+Employee <-- Department
+Employee <-- Position
+Employee <-- Salary
+
+
+@enduml

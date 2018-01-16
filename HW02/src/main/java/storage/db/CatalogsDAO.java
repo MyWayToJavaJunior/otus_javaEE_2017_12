@@ -1,10 +1,11 @@
 package storage.db;
 
 import entities.*;
+import storage.interfaces.ICatalogsDAO;
 
 import java.sql.*;
 
-class CatalogsDAO {
+class CatalogsDAO implements ICatalogsDAO {
     private Connection connection;
     private PreparedStatement accountsRoleInsertStatement;
     private PreparedStatement accountsRoleInsertOrUpdateStatement;
@@ -72,21 +73,8 @@ class CatalogsDAO {
             System.err.println(e.getMessage());
         }
     }
-/*
-    long executeAndGetID(PreparedStatement statement, boolean isInsertStatment, long curID) throws SQLException {
-        statement.executeUpdate();
-        long newId = curID;
 
-        if (isInsertStatment) {
-            ResultSet rs = statement.getGeneratedKeys();
-            if (rs.next()) {
-                newId = rs.getInt(1);
-            }
-        }
-        return newId;
-    }
-*/
-    long saveIDNameRec(PreparedStatement insertStatment, PreparedStatement insertOrUpdateStatment, long id, String name) throws SQLException {
+    private long saveIDNameRec(PreparedStatement insertStatment, PreparedStatement insertOrUpdateStatment, long id, String name) throws SQLException {
         PreparedStatement statement;
         if (id <= 0) {
             statement = insertStatment;
@@ -100,27 +88,27 @@ class CatalogsDAO {
         return PreparedStatmentHelper.executeAndGetID(statement, id > 0, id);
     }
 
-    void save(AccountRole role) throws SQLException {
+    public void save(AccountRole role) throws SQLException {
         long id = saveIDNameRec(accountsRoleInsertStatement, accountsRoleInsertOrUpdateStatement, role.getId(), role.getName());
         role.setId(id);
     }
 
-    void save(Location location) throws SQLException {
+    public void save(Location location) throws SQLException {
         long id = saveIDNameRec(locationInsertStatement, locationInsertOrUpdateStatement, location.getId(), location.getName());
         location.setId(id);
     }
 
-    void save(Position position) throws SQLException {
+    public void save(Position position) throws SQLException {
         long id = saveIDNameRec(positionInsertStatement, positionInsertOrUpdateStatement, position.getId(), position.getName());
         position.setId(id);
     }
 
-    void save(Department department) throws SQLException {
+    public void save(Department department) throws SQLException {
         long id = saveIDNameRec(departmnetInsertStatement, departmnetInsertOrUpdateStatement, department.getId(), department.getName());
         department.setId(id);
     }
 
-    void save(Account account) throws SQLException {
+    public void save(Account account) throws SQLException {
         boolean isInsert = (account.getId() <= 0);
         int parIndex = isInsert? 1: 2;
         PreparedStatement statement = isInsert? accountInsertStatement: accountInsertOrUpdateStatement;

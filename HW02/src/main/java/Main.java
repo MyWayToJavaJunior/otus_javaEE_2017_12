@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import entities.Employee;
 import entities.Salary;
-import storage.IDataStorageService;
+import storage.interfaces.IDataStorageService;
 import storage.db.MySQLDataStorageService;
 
 import java.lang.reflect.Type;
@@ -22,7 +22,7 @@ public class Main {
         storageService.initStorage();
         storageService.importData();
 
-        List<Employee> employees = storageService.getAllEmployees();
+        List<Employee> employees = storageService.getAllEmployeesWithMaxSalary();
 
         Gson gson = new GsonBuilder().setPrettyPrinting().setExclusionStrategies(new ExclusionStrategy() {
             @Override

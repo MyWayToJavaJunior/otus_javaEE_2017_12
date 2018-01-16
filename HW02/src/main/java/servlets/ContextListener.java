@@ -1,6 +1,6 @@
 package servlets;
 
-import storage.IDataStorageService;
+import storage.interfaces.IDataStorageService;
 import storage.db.MySQLDataStorageService;
 
 import javax.servlet.ServletContextEvent;

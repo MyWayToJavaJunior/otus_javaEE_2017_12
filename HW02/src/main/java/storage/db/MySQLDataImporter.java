@@ -6,6 +6,8 @@ import entities.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import storage.interfaces.ICatalogsDAO;
+import storage.interfaces.IEmployeesDAO;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -32,7 +34,7 @@ public class MySQLDataImporter {
         this.gson = new Gson();
     }
 
-    private void importAccountsRoles(CatalogsDAO catalogsDAO, String datafile) throws Exception {
+    private void importAccountsRoles(ICatalogsDAO catalogsDAO, String datafile) throws Exception {
         String content = new String(Files.readAllBytes((new File(datafile)).toPath()));
         List<AccountRole> roles = gson.fromJson(content, new TypeToken<ArrayList<AccountRole>>(){}.getType());
         for (AccountRole role: roles) {
@@ -41,7 +43,7 @@ public class MySQLDataImporter {
     }
 
 
-    private void importAccounts(CatalogsDAO catalogsDAO, String datafile) throws Exception {
+    private void importAccounts(ICatalogsDAO catalogsDAO, String datafile) throws Exception {
         String content = new String(Files.readAllBytes((new File(datafile)).toPath()));
         JSONArray array = (JSONArray) (new JSONParser()).parse(content);
 
@@ -56,7 +58,7 @@ public class MySQLDataImporter {
         }
     }
 
-    private void importLocations(CatalogsDAO catalogsDAO, String datafile) throws Exception {
+    private void importLocations(ICatalogsDAO catalogsDAO, String datafile) throws Exception {
         String content = new String(Files.readAllBytes((new File(datafile)).toPath()));
         List<Location> locations = gson.fromJson(content, new TypeToken<ArrayList<Location>>(){}.getType());
         for (Location location: locations) {
@@ -64,7 +66,7 @@ public class MySQLDataImporter {
         }
     }
 
-    private void importPositions(CatalogsDAO catalogsDAO, String datafile) throws Exception {
+    private void importPositions(ICatalogsDAO catalogsDAO, String datafile) throws Exception {
         String content = new String(Files.readAllBytes((new File(datafile)).toPath()));
         List<Position> positions = gson.fromJson(content, new TypeToken<ArrayList<Position>>(){}.getType());
         for (Position position: positions) {
@@ -72,7 +74,7 @@ public class MySQLDataImporter {
         }
     }
 
-    private void importDepartments(CatalogsDAO catalogsDAO, String datafile) throws Exception {
+    private void importDepartments(ICatalogsDAO catalogsDAO, String datafile) throws Exception {
         String content = new String(Files.readAllBytes((new File(datafile)).toPath()));
         List<Department> departments = gson.fromJson(content, new TypeToken<ArrayList<Department>>(){}.getType());
         for (Department department: departments) {
@@ -81,7 +83,7 @@ public class MySQLDataImporter {
     }
 
 
-    private void importEmployeesPersonalInfo(EmployeesDAO employeesDAO, String datafile) throws Exception {
+    private void importEmployeesPersonalInfo(IEmployeesDAO IEmployeesDAO, String datafile) throws Exception {
         String content = new String(Files.readAllBytes((new File(datafile)).toPath()));
         JSONArray array = (JSONArray) (new JSONParser()).parse(content);
 
@@ -94,11 +96,11 @@ public class MySQLDataImporter {
             personalInfo.setMiddleName((String)jo.get("middle_name"));
             personalInfo.setSecondName((String)jo.get("second_name"));
             personalInfo.setPersonalEMail((String)jo.get("personal_email"));
-            employeesDAO.save(personalInfo);
+            IEmployeesDAO.save(personalInfo);
         }
     }
 
-    private void importEmployees(EmployeesDAO employeesDAO, String datafile) throws Exception {
+    private void importEmployees(IEmployeesDAO IEmployeesDAO, String datafile) throws Exception {
         String content = new String(Files.readAllBytes((new File(datafile)).toPath()));
         JSONArray array = (JSONArray) (new JSONParser()).parse(content);
 
@@ -111,11 +113,11 @@ public class MySQLDataImporter {
             employee.setDepartment(new Department(Long.valueOf((String)jo.get("department_id"))));
             employee.setPosition(new Position(Long.valueOf((String)jo.get("position_id"))));
             employee.setInternalPhoneNumber((String)jo.get("internal_phone_number"));
-            employeesDAO.save(employee);
+            IEmployeesDAO.save(employee);
         }
     }
 
-    private void importSalaries(EmployeesDAO employeesDAO, String datafile) throws Exception {
+    private void importSalaries(IEmployeesDAO IEmployeesDAO, String datafile) throws Exception {
         String content = new String(Files.readAllBytes((new File(datafile)).toPath()));
         JSONArray array = (JSONArray) (new JSONParser()).parse(content);
 
@@ -125,15 +127,15 @@ public class MySQLDataImporter {
             salary.setId(Long.valueOf((String)jo.get("id")));
             salary.setEmployee(new Employee(Long.valueOf((String)jo.get("employee_id"))));
             salary.setSalary(Long.valueOf((String)jo.get("salary")));
-            employeesDAO.save(salary);
+            IEmployeesDAO.save(salary);
         }
     }
 
     public void importData(String dataDir) throws Exception {
         dataDir = new File(dataDir).toString();
         Connection connection = connectionFactory.getDBConnection();
-        CatalogsDAO catalogsDAO = new CatalogsDAO(connection);
-        EmployeesDAO employeesDAO = new EmployeesDAO(connection);
+        ICatalogsDAO catalogsDAO = new CatalogsDAO(connection);
+        IEmployeesDAO IEmployeesDAO = new EmployeesDAO(connection);
 
         importAccountsRoles(catalogsDAO, Paths.get(dataDir).resolve(DATA_FILE_ACCOUNTS_ROLES).toString());
         importLocations(catalogsDAO, Paths.get(dataDir).resolve(DATA_FILE_LOCATIONS).toString());
@@ -141,9 +143,9 @@ public class MySQLDataImporter {
         importDepartments(catalogsDAO, Paths.get(dataDir).resolve(DATA_FILE_DEPARTMENTS).toString());
         importAccounts(catalogsDAO, Paths.get(dataDir).resolve(DATA_FILE_ACCOUNTS).toString());
 
-        importEmployeesPersonalInfo(employeesDAO, Paths.get(dataDir).resolve(DATA_FILE_EMPLOYEES_PERSONAL_INFO).toString());
-        importEmployees(employeesDAO, Paths.get(dataDir).resolve(DATA_FILE_EMPLOYEES).toString());
-        importSalaries(employeesDAO, Paths.get(dataDir).resolve(DATA_FILE_SALARIES).toString());
+        importEmployeesPersonalInfo(IEmployeesDAO, Paths.get(dataDir).resolve(DATA_FILE_EMPLOYEES_PERSONAL_INFO).toString());
+        importEmployees(IEmployeesDAO, Paths.get(dataDir).resolve(DATA_FILE_EMPLOYEES).toString());
+        importSalaries(IEmployeesDAO, Paths.get(dataDir).resolve(DATA_FILE_SALARIES).toString());
 
     }
 }

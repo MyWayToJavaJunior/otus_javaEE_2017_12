@@ -13,6 +13,9 @@ class DBConsts {
     static final String CREATE_TABLE_SQL = "CREATE TABLE IF NOT EXISTS %s(%s, primary key (%s))";
     static final String CREATE_VIEW_SQL = "CREATE OR REPLACE VIEW %s AS %s";
 
+    static final String CREATE_PROC_SQL = "CREATE PROCEDURE %s BEGIN %s END";
+    static final String CREATE_FUNCTION_SQL = "CREATE FUNCTION %s RETURNS %s BEGIN %s RETURN %s; END";
+
     static final String INSERT_INTO_SQL = "INSERT INTO %s (%s) VALUES (%s)";
     static final String INSERT_OR_UPDATE_SQL = INSERT_INTO_SQL + " ON DUPLICATE KEY UPDATE %s";
 
@@ -57,6 +60,9 @@ class DBConsts {
     static final String F_POSITION_NAME = "PositionName";
     static final String F_SALARY_ID = "SalaryID";
 
+    static final String SP_DELETE_EMPLOYEE_BY_ID = "SP_DeleteEmployeeByID(%s)";
+    static final String FN_GET_MAX_SALARY = "FN_GetMaxSalary()";
+    static final String SP_GET_ALL_EMPLOYEES_WITH_MAX_SALARY = "SP_GetAllEmployeesWithMaxSalary()";
 
     static String newFieldDesc(String fieldName, String fieldType) {
         return String.format("%s %s", fieldName, fieldType);

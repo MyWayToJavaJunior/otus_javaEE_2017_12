@@ -1,5 +1,6 @@
 package servlets;
 
+import entities.Employee;
 import storage.interfaces.IDataStorageService;
 
 import javax.servlet.ServletException;
@@ -9,16 +10,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/init_storage")
-public class InitStorageServlet extends HttpServlet {
+@WebServlet("/update_two_recs")
+public class UpdateTwoEmployeeRecsServlet extends HttpServlet{
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         IDataStorageService dataStorageService = (IDataStorageService) getServletContext().getAttribute(ServletConsts.ATTR_DATA_STORAGE_SERVICE);
         try {
-            dataStorageService.initStorage();
-            dataStorageService.importData();
-            request.setAttribute(ServletConsts.ATTR_RESULT_MESSAGE, ServletConsts.MSG_STORAGE_SUCCESSFULLY_INITIALIZED);
+            Employee employee;
+
+            employee = dataStorageService.getOneEmployee(7);
+            employee.getPersonalInfo().setFirstName(employee.getPersonalInfo().getFirstName() + "(changed)");
+            dataStorageService.saveEmployeePersonalInfo(employee.getPersonalInfo());
+
+            employee = dataStorageService.getOneEmployee(6);
+            employee.getSalary().setSalary(employee.getSalary().getSalary() + 1);
+            dataStorageService.saveEmployeeSalary(employee.getSalary());
+
+            request.setAttribute(ServletConsts.ATTR_RESULT_MESSAGE, ServletConsts.MSG_RECS_SUCCESSFULLY_CHANGED);
             request.setAttribute(ServletConsts.ATTR_RESULT_MESSAGE_CLASS, ServletConsts.ATTR_GOOD_RESULT_MESSAGE_CLASS);
         } catch (Exception e) {
             request.setAttribute(ServletConsts.ATTR_RESULT_MESSAGE, e.getMessage());

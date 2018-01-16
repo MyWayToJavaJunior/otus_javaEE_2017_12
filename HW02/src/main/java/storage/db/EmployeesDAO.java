@@ -2,16 +2,13 @@ package storage.db;
 
 import entities.*;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import static storage.db.DBConsts.*;
 
-public class EmployeesDAO {
+public class EmployeesDAO implements storage.interfaces.IEmployeesDAO {
 
     private Connection connection;
 
@@ -26,6 +23,10 @@ public class EmployeesDAO {
 
     private PreparedStatement employeeSelectByIDStatement;
     private PreparedStatement employeeSelectAllStatement;
+
+    private CallableStatement employeeDeletByIDStatement;
+
+    private CallableStatement employeeSelectAllWithMaxSalaryStatement;
 
     public EmployeesDAO(Connection connection) {
         this.connection = connection;
@@ -83,7 +84,15 @@ public class EmployeesDAO {
     }
 
     private PreparedStatement prepareEmployeeSelectAllStatement() throws SQLException {
-        return connection.prepareStatement("SELECT * FROM " + VIEW_EMPLOYEES + " ORDER BY " + F_FIRST_NAME);
+        return connection.prepareStatement("SELECT * FROM " + VIEW_EMPLOYEES + " ORDER BY " + F_ID + " DESC");
+    }
+
+    private CallableStatement prepareEmployeeDeletByIDStatement() throws SQLException {
+        return connection.prepareCall("call " + String.format(SP_DELETE_EMPLOYEE_BY_ID, "?"));
+    }
+
+    private CallableStatement prepareEmployeeSelectAllWithMaxSalaryStatement() throws SQLException {
+        return connection.prepareCall("call " + SP_GET_ALL_EMPLOYEES_WITH_MAX_SALARY);
     }
 
     private void prepareStatments() {
@@ -100,12 +109,17 @@ public class EmployeesDAO {
             employeeSelectAllStatement = prepareEmployeeSelectAllStatement();
             employeeSelectByIDStatement = prepareEmployeeSelectByIDStatement();
 
+            employeeDeletByIDStatement = prepareEmployeeDeletByIDStatement();
+
+            employeeSelectAllWithMaxSalaryStatement = prepareEmployeeSelectAllWithMaxSalaryStatement();
+
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
     }
 
-    void save(EmployeePersonalInfo employeePersonalInfo) throws SQLException {
+    @Override
+    public void save(EmployeePersonalInfo employeePersonalInfo) throws SQLException {
         boolean isInsert = (employeePersonalInfo.getId() <= 0);
         int parIndex = isInsert? 1: 2;
         PreparedStatement statement = isInsert? employeePersonalInfoInsertStatement: employeePersonalInfoInsertOrUpdateStatement;
@@ -126,7 +140,8 @@ public class EmployeesDAO {
         employeePersonalInfo.setId(PreparedStatmentHelper.executeAndGetID(statement, !isInsert, employeePersonalInfo.getId()));
     }
 
-    void save(Employee employee) throws SQLException {
+    @Override
+    public void save(Employee employee) throws SQLException {
         boolean isInsert = (employee.getId() <= 0);
         int parIndex = isInsert? 1: 2;
         PreparedStatement statement = isInsert? employeeInsertStatement: employeeInsertOrUpdateStatement;
@@ -148,7 +163,8 @@ public class EmployeesDAO {
     }
 
 
-    void save(Salary salary) throws SQLException {
+    @Override
+    public void save(Salary salary) throws SQLException {
         boolean isInsert = (salary.getId() <= 0);
         int parIndex = isInsert? 1: 2;
         PreparedStatement statement = isInsert? salaryInsertStatement: salaryInsertOrUpdateStatement;
@@ -196,7 +212,8 @@ public class EmployeesDAO {
         return employee;
     }
 
-    List<Employee> getAll() throws SQLException {
+    @Override
+    public List<Employee> getAllEmployees() throws SQLException {
         ArrayList<Employee> employees = new ArrayList<>();
 
         employeeSelectAllStatement.execute();
@@ -208,15 +225,34 @@ public class EmployeesDAO {
         return employees;
     }
 
-    Employee getOne(long id) throws SQLException {
+    @Override
+    public List<Employee> getAllEmployeesWithMaxSalary() throws SQLException {
+        ArrayList<Employee> employees = new ArrayList<>();
+
+        employeeSelectAllWithMaxSalaryStatement.execute();
+        ResultSet rs = employeeSelectAllWithMaxSalaryStatement.getResultSet();
+        while (rs.next()) {
+            employees.add(parseEmployeeResultSet(rs));
+        }
+
+        return employees;
+    }
+
+    @Override
+    public Employee getOneEmployee(long id) throws SQLException {
         employeeSelectByIDStatement.setLong(1, id);
         employeeSelectByIDStatement.execute();
-        ResultSet rs = employeeSelectAllStatement.getResultSet();
+        ResultSet rs = employeeSelectByIDStatement.getResultSet();
         if (rs.next()) {
             return parseEmployeeResultSet(rs);
         }
         return null;
+    }
 
+    @Override
+    public void deleteOneEmployee(long id) throws SQLException{
+        employeeDeletByIDStatement.setLong(1, id);
+        employeeDeletByIDStatement.execute();
     }
 
 

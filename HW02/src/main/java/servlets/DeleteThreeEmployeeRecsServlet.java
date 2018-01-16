@@ -9,16 +9,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/init_storage")
-public class InitStorageServlet extends HttpServlet {
+@WebServlet("/delete_three_recs")
+public class DeleteThreeEmployeeRecsServlet extends HttpServlet{
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         IDataStorageService dataStorageService = (IDataStorageService) getServletContext().getAttribute(ServletConsts.ATTR_DATA_STORAGE_SERVICE);
         try {
-            dataStorageService.initStorage();
-            dataStorageService.importData();
-            request.setAttribute(ServletConsts.ATTR_RESULT_MESSAGE, ServletConsts.MSG_STORAGE_SUCCESSFULLY_INITIALIZED);
+            dataStorageService.deleteOneEmployee(1);
+            dataStorageService.deleteOneEmployee(2);
+            dataStorageService.deleteOneEmployee(3);
+            request.setAttribute(ServletConsts.ATTR_RESULT_MESSAGE, ServletConsts.MSG_RECS_SUCCESSFULLY_DELETED);
             request.setAttribute(ServletConsts.ATTR_RESULT_MESSAGE_CLASS, ServletConsts.ATTR_GOOD_RESULT_MESSAGE_CLASS);
         } catch (Exception e) {
             request.setAttribute(ServletConsts.ATTR_RESULT_MESSAGE, e.getMessage());

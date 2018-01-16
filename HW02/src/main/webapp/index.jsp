@@ -14,7 +14,9 @@
     	    <ul>
                 <li><a href = "init_storage" class = "options-item">Init storage</a></li>
                 <li><a href = "output_employees_list" class = "options-item">Output employees list</a></li>
+                <li><a href = "output_employees_with_max_salary" class = "options-item">Output employees with max salary</a></li>
                 <li><a href = "update_two_recs" class = "options-item">Update two employees recs</a></li>
+                <li><a href = "delete_three_recs" class = "options-item">Delete three employees recs</a></li>
             </ul>
 	    </center>
 	</div>

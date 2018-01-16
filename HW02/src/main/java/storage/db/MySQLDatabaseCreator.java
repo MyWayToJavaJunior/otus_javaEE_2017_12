@@ -164,7 +164,28 @@ public class MySQLDatabaseCreator {
         statement.execute(sql);
     }
 
-    public void createTablesAndViews() {
+    private void createDeleteEmployeesProc(Connection connection) throws SQLException {
+        Statement statement = connection.createStatement();
+        String sql = String.format(CREATE_PROC_SQL, String.format(SP_DELETE_EMPLOYEE_BY_ID, "IN EmployeeID BIGINT"),
+                "DELETE FROM " + TBL_EMPLOYEES + " WHERE ID = EmployeeID;");
+        statement.execute(sql);
+    }
+
+    private void createGetMaxSalaryFun(Connection connection) throws SQLException {
+        Statement statement = connection.createStatement();
+        String sql = String.format(CREATE_FUNCTION_SQL, FN_GET_MAX_SALARY, "BIGINT",
+                "DECLARE MaxSalary BIGINT; SELECT MAX(Salary) INTO MaxSalary FROM " + TBL_SALARIES + ";", "MaxSalary");
+        statement.execute(sql);
+    }
+
+    private void createSelectEmployeesWithMaxSalaryProc(Connection connection) throws SQLException {
+        Statement statement = connection.createStatement();
+        String sql = String.format(CREATE_PROC_SQL, SP_GET_ALL_EMPLOYEES_WITH_MAX_SALARY,
+                "SELECT * FROM " + VIEW_EMPLOYEES + " WHERE Salary = " + FN_GET_MAX_SALARY + ";", "MaxSalary");
+        statement.execute(sql);
+    }
+
+    public void createDatabaseStructure() {
         try (Connection connection = connectionFactory.getDBConnection()) {
             createDepartmentsTable(connection);
             createLocationsTable(connection);
@@ -178,6 +199,11 @@ public class MySQLDatabaseCreator {
             createAccountsView(connection);
             createEmployeesPersonalInfoView(connection);
             createEmployeesView(connection);
+
+            createDeleteEmployeesProc(connection);
+
+            createGetMaxSalaryFun(connection);
+            createSelectEmployeesWithMaxSalaryProc(connection);
 
         } catch (SQLException e) {
             System.err.println(e.getMessage());
