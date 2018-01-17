@@ -11,7 +11,7 @@ package org.apache.jsp;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.jsp.*;
-import static servlets.ServletConsts.*;
+import static ru.otus.homework02.servlets.ServletConsts.*;
 
 public final class action_005fresult_jsp extends org.apache.jasper.runtime.HttpJspBase
     implements org.apache.jasper.runtime.JspSourceDependent,
@@ -30,7 +30,7 @@ public final class action_005fresult_jsp extends org.apache.jasper.runtime.HttpJ
     _jspx_imports_packages = new java.util.HashSet<>();
     _jspx_imports_packages.add("javax.servlet");
     _jspx_imports_packages.add("javax.servlet.http");
-    _jspx_imports_packages.add("static servlets.ServletConsts");
+    _jspx_imports_packages.add("static ru.otus.homework02.servlets.ServletConsts");
     _jspx_imports_packages.add("javax.servlet.jsp");
     _jspx_imports_classes = null;
   }

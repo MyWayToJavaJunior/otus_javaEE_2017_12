@@ -120,7 +120,7 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\t\t<center>\r\n");
       out.write("    \t    <div class = \"actions-header\">Available actions</div>\r\n");
       out.write("    \t    <ul>\r\n");
-      out.write("                <li><a href = \"init_storage\" class = \"options-item\">Init storage</a></li>\r\n");
+      out.write("                <li><a href = \"init_storage\" class = \"options-item\">Init ru.otus.homework02.storage</a></li>\r\n");
       out.write("                <li><a href = \"output_employees_list\" class = \"options-item\">Output employees list</a></li>\r\n");
       out.write("                <li><a href = \"output_employees_with_max_salary\" class = \"options-item\">Output employees with max salary</a></li>\r\n");
       out.write("                <li><a href = \"update_two_recs\" class = \"options-item\">Update two employees recs</a></li>\r\n");
