@@ -1,0 +1,86 @@
+[
+  {
+    "personalInfo": {
+      "firstName": "Всеволод",
+      "secondName": "Перебейнос",
+      "middleName": "Андреевич",
+      "birthDate": "1975-10-11",
+      "location": "Саратов"
+    },
+    "department": "Поволжье",
+    "position": "Сантехник",
+    "salary": 5000
+  },
+  {
+    "personalInfo": {
+      "firstName": "Жинтынбек",
+      "secondName": "Степь",
+      "middleName": "Курганович",
+      "birthDate": "1978-06-14",
+      "location": "Саратов"
+    },
+    "department": "Поволжье",
+    "position": "Плотник",
+    "salary": 10000
+  },
+  {
+    "personalInfo": {
+      "firstName": "Василий",
+      "secondName": "Каптча",
+      "middleName": "Илларионович",
+      "birthDate": "1983-03-09",
+      "location": "Саратов"
+    },
+    "department": "Поволжье",
+    "position": "Программист",
+    "salary": 20000
+  },
+  {
+    "personalInfo": {
+      "location": "Самара",
+      "firstName": "Иван",
+      "secondName": "Петров",
+      "middleName": "Сидоревич",
+      "birthDate": "1985-09-24"
+    },
+    "department": "Поволжье",
+    "position": "Кадровый работник",
+    "salary": 100000
+  },
+  {
+    "personalInfo": {
+      "location": "Самара",
+      "firstName": "Геннадий",
+      "secondName": "Пульт",
+      "middleName": "Акинфеевич",
+      "birthDate": "1987-05-17"
+    },
+    "department": "Поволжье",
+    "position": "Кадровый работник",
+    "salary": 100000
+  },
+  {
+    "personalInfo": {
+      "location": "Москва",
+      "firstName": "Феодосия",
+      "secondName": "Резерфорд",
+      "middleName": "Игоревна",
+      "birthDate": "1971-07-03"
+    },
+    "department": "Центральный",
+    "position": "Главный бухгалтер",
+    "salary": 700000
+  },
+  {
+    "personalInfo": {
+      "location": "Москва",
+      "firstName": "Франсуа",
+      "secondName": "Гугенот",
+      "middleName": "Людвикович",
+      "birthDate": "1967-01-01"
+    },
+    "department": "Центральный",
+    "position": "Генеральный директор",
+    "salary": 1000000
+  }
+]
