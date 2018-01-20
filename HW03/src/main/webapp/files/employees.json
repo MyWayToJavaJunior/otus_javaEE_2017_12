@@ -1,0 +1,89 @@
+
+{
+    "employees": [
+        {
+            "department": "Поволжье",
+            "personalInfo": {
+                "birthDate": "1975-10-11",
+                "firstName": "Всеволод",
+                "location": "Саратов",
+                "middleName": "Андреевич",
+                "secondName": "Перебейнос"
+            },
+            "position": "Сантехник",
+            "salary": 5000
+        },
+        {
+            "department": "Поволжье",
+            "personalInfo": {
+                "birthDate": "1978-06-14",
+                "firstName": "Жинтынбек",
+                "location": "Саратов",
+                "middleName": "Курганович",
+                "secondName": "Степь"
+            },
+            "position": "Плотник",
+            "salary": 10000
+        },
+        {
+            "department": "Поволжье",
+            "personalInfo": {
+                "birthDate": "1983-03-09",
+                "firstName": "Василий",
+                "location": "Саратов",
+                "middleName": "Илларионович",
+                "secondName": "Каптча"
+            },
+            "position": "Программист",
+            "salary": 20000
+        },
+        {
+            "department": "Поволжье",
+            "personalInfo": {
+                "birthDate": "1985-09-24",
+                "firstName": "Иван",
+                "location": "Самара",
+                "middleName": "Сидоревич",
+                "secondName": "Петров"
+            },
+            "position": "Кадровый работник",
+            "salary": 100000
+        },
+        {
+            "department": "Поволжье",
+            "personalInfo": {
+                "birthDate": "1987-05-17",
+                "firstName": "Геннадий",
+                "location": "Самара",
+                "middleName": "Акинфеевич",
+                "secondName": "Пульт"
+            },
+            "position": "Кадровый работник",
+            "salary": 100000
+        },
+        {
+            "department": "Центральный",
+            "personalInfo": {
+                "birthDate": "1971-07-03",
+                "firstName": "Феодосия",
+                "location": "Москва",
+                "middleName": "Игоревна",
+                "secondName": "Резерфорд"
+            },
+            "position": "Главный бухгалтер",
+            "salary": 700000
+        },
+        {
+            "department": "Центральный",
+            "personalInfo": {
+                "birthDate": "1967-01-01",
+                "firstName": "Франсуа",
+                "location": "Москва",
+                "middleName": "Людвикович",
+                "secondName": "Гугенот"
+            },
+            "position": "Генеральный директор",
+            "salary": 1000000
+        }
+    ]
+}

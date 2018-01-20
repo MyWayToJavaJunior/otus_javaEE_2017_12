@@ -1,0 +1,67 @@
+body {
+		background: black;
+		margin-top: 50px;
+}
+
+.centrator {
+		margin-left: auto;
+		margin-right: auto;
+}
+
+.main-container {
+		width: 800px;
+		height: 600px;
+		background: linear-gradient(45deg, #1f2023, #35363B);
+		border-radius: 10px;
+}
+
+.header{
+    background: url("../img/otus.png") no-repeat;
+    background-position: center 10px;
+    background-size: 50%;
+    padding-top: 170px;
+    font-size: 22pt;
+    color: #CC7832;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.actions-header {
+    font-size: 14pt;
+    margin-top: 50px;
+    margin-left: 10px;
+    color: steelblue;
+}
+
+.options-item {
+    color: #77B767;
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+    padding: 0px;
+}
+
+.action-result-container {
+    height: 250px;
+    overflow-y: auto;
+    border: 1px solid steelblue;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
+    padding: 5px;
+}
+
+.action-result-good-message {
+    color: #77B767;
+}
+
+.action-result-bad-message {
+    color: red;
+}
+
+.back-href {
+    color: #77B767;
+    text-decoration: none;
+}

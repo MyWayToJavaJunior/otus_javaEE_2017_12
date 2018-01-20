@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<employees>
+    <employee>
+        <personal_info birth_date="1975-10-11" first_name="Всеволод" middle_name="Андреевич" second_name="Перебейнос">
+            <location>Саратов</location>
+        </personal_info>
+        <position>Сантехник</position>
+        <department>Поволжье</department>
+        <salary>5000</salary>
+    </employee>
+    <employee>
+        <personal_info birth_date="1978-06-14" first_name="Жинтынбек" middle_name="Курганович" second_name="Степь">
+            <location>Саратов</location>
+        </personal_info>
+        <position>Плотник</position>
+        <department>Поволжье</department>
+        <salary>10000</salary>
+    </employee>
+    <employee>
+        <personal_info birth_date="1983-03-09" first_name="Василий" middle_name="Илларионович" second_name="Каптча">
+            <location>Саратов</location>
+        </personal_info>
+        <position>Программист</position>
+        <department>Поволжье</department>
+        <salary>20000</salary>
+    </employee>
+    <employee>
+        <personal_info birth_date="1985-09-24" first_name="Иван" middle_name="Сидоревич" second_name="Петров">
+            <location>Самара</location>
+        </personal_info>
+        <position>Кадровый работник</position>
+        <department>Поволжье</department>
+        <salary>100000</salary>
+    </employee>
+    <employee>
+        <personal_info birth_date="1987-05-17" first_name="Геннадий" middle_name="Акинфеевич" second_name="Пульт">
+            <location>Самара</location>
+        </personal_info>
+        <position>Кадровый работник</position>
+        <department>Поволжье</department>
+        <salary>100000</salary>
+    </employee>
+    <employee>
+        <personal_info birth_date="1971-07-03" first_name="Феодосия" middle_name="Игоревна" second_name="Резерфорд">
+            <location>Москва</location>
+        </personal_info>
+        <position>Главный бухгалтер</position>
+        <department>Центральный</department>
+        <salary>700000</salary>
+    </employee>
+    <employee>
+        <personal_info birth_date="1967-01-01" first_name="Франсуа" middle_name="Людвикович" second_name="Гугенот">
+            <location>Москва</location>
+        </personal_info>
+        <position>Генеральный директор</position>
+        <department>Центральный</department>
+        <salary>1000000</salary>
+    </employee>
+</employees>
